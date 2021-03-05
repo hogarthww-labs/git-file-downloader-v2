@@ -79,4 +79,57 @@ downloader.run().catch(err => {
 });
 ```
 
-More usages in `test/git-file-downloader.test.js`.
+## Set raw file baseUrl
+
+This is useful when working with enterprise github `https://github.<orgname>.com/raw/`. For the organisation `lab-experiments` it would `https://github.lab-experiments.com/raw/`.
+
+You can customize the base URL for gitlab the same way.
+
+### Github
+
+```js
+downloader.setGithubRawBaseUrl(githubRawBaseUrl)
+```
+
+### Gitlab
+
+```js
+downloader.setGitlabRawBaseUrl(gitlabRawBaseUrl)
+```
+
+## Return file content without writing file
+
+Either avoid setting `output` option
+
+```js
+return new GitFileDownloader({
+  provider: 'gitlab',
+  repository: 'foo/bar',
+  branch: 'master',
+  file: 'test.txt',
+  keep_original_path: false,
+  private_token: 'myAwesomeToken'
+}).run().then((output) => {
+  console.log(output)
+});
+```
+
+Or explicitly set `writeFile: false`
+
+```js
+return new GitFileDownloader({
+  provider: 'gitlab',
+  repository: 'foo/bar',
+  branch: 'master',
+  file: 'test.txt',
+  writeFile: false,
+  private_token: 'myAwesomeToken'
+}).run().then((output) => {
+  console.log(output)
+});
+```
+
+## More usages
+
+See `test/git-file-downloader.test.js`.
+
